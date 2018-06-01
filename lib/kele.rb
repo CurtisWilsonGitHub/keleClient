@@ -14,10 +14,10 @@ class Kele
     end
   end
 
-  # def get_me
-  #   response = self.class.get("/users/me", headers: { "authorization" => @auth_token })
-  #   @me = response
-  # end
+  def get_me
+    response = self.class.get("/users/me", headers: { "authorization" => @auth_token })
+    @me = response
+  end
   #
   # def get_mentor_availability
   #   mentor_id = @me['current_enrollment']['mentor_id']
