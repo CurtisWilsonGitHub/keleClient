@@ -13,7 +13,7 @@ class Kele
     response = self.class.post( "/sessions", body: {"email": email, "password": password})
     @auth_token = response["auth_token"]
     if @auth_token.nil?
-      raise "Invalid crednetials, please try again"
+      raise "Invalid credentials, please try again"
     end
   end
 
@@ -43,12 +43,18 @@ class Kele
   end
 
   def create_message(sender, recipient_id, subject, stripped_text)
-        response = self.class.post("/messages", headers: {"authorization" => @auth_token}, body:{
-          "sender": sender,
-          "recipient_id": recipient_id,
-          "subject": subject,
-          "stripped-text": stripped_text
-          })
-          response.success? puts 'Message was sent!'
+    response = self.class.post("/messages", headers: {"authorization" => @auth_token}, body:{
+      "sender": sender,
+      "recipient_id": recipient_id,
+      "subject": subject,
+      "stripped-text": stripped_text
+      })
+      response.success? puts 'Message was sent!'
+  end
+
+  def get_remaining_checkpoints(chain_id)
+    response = self.class.get("/checkpoints/#{chain_id}", headers: {"authorization" => @auth_token})
+    checkpoint_array = JSON.parse(response.body)
+    puts checkpoint_array
   end
 end
