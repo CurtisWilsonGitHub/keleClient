@@ -42,7 +42,7 @@ class Kele
     puts response
   end
 
-  def create_message(sender, recipient_id, subject, stripped_text)
+  def create_message(sender, recipient_id, subject, stripped_text, token = "")
     response = self.class.post("/messages", headers: {"authorization" => @auth_token}, body:{
       "sender": sender,
       "recipient_id": recipient_id,
@@ -52,9 +52,9 @@ class Kele
       response.success? puts 'Message was sent!'
   end
 
-  def get_remaining_checkpoints(chain_id)
-    response = self.class.get("/checkpoints/#{chain_id}", headers: {"authorization" => @auth_token})
-    checkpoint_array = JSON.parse(response.body)
-    puts checkpoint_array
+  def get_remaining_checkpoints(enrollment_id)
+    response = self.class.get("/enrollment_chains/#{enrollment_id}/checkpoints_remaining_in_section", headers: {"authorization" => @auth_token})
+    checkpoints_array = JSON.parse(response.body)
+    puts checkpoints_array
   end
 end
